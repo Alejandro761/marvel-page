@@ -6,7 +6,7 @@ const api = axios.create({
         'ts': '1',
         'apikey': 'c8f2e4ce9c32dabec601647d1c31cdd6',
         'hash': '04d0644b58c6e9a641853062e1a9af70',
-        'limit': '5'
+        'limit': '10'
     }
 });
 
@@ -15,20 +15,24 @@ const getCharacteres = async () => {
     console.log(data.data.results);
 
     const abominationImg = document.querySelector('img');
-    // abominationImg.src = data.data.results[1].thumbnail.path + '.jpg';
+    abominationImg.src = data.data.results[4].thumbnail.path + '.jpg';
 }
 
 const getComics = async () => {
     const {data} = await api('comics');
     console.log(data.data);
+
+    const comic = document.querySelector('#comics-cards div img' );
+    comic.src = data.data.results[6].thumbnail.path + '.jpg';
 }
 
-const getSeries = async () => {
-    const {data} = await api('series');
+const getEvents = async () => {
+    const {data} = await api('events');
     console.log(data.data);
+    const comic = document.querySelector('#events-cards div img' );
+    comic.src = data.data.results[0].thumbnail.path + '.jpg';
 }
 
 getCharacteres();
 getComics();
-getSeries(); 
-
+getEvents(); 
