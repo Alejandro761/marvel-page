@@ -78,7 +78,38 @@ h3 {
     font-weight: 400;
 }
 
+img {
+    border-radius: 7px;
+}
+
 .card-image {
     height: 200px;
 }
 
+#secundary-title {
+    margin-block: 35px;
+    text-align: center;
+    font-size: 2.9rem;
+}
+
+#id-image {
+    display: block;
+    width: 75%;
+    margin: 0 auto;
+}
+
+#id-information p {
+    margin-block: 32px;
+    margin-block-end: 57px;
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.relationship-list, .relationship-list--title {
+    margin-block-end: 20px;
+}
+
+.relationship-container h3 {
+    margin-block-end: 8px;
+    font-weight: 300;
+}

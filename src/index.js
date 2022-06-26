@@ -33,6 +33,12 @@ const getEvents = async () => {
     comic.src = data.data.results[0].thumbnail.path + '.jpg';
 }
 
+const getCharacteresComics = async () => {
+    const {data} = await api('characters/1011334/comics');
+    console.log(data.data);
+}
+
 getCharacteres();
 getComics();
 getEvents(); 
+// getCharacteresComics();
