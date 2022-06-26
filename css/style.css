@@ -1,6 +1,7 @@
 :root {
     --red: #E71F1F;
     --white: #FFFFFF;
+    --darkBlue: #0000FF;
 }
 
 *{
@@ -19,12 +20,13 @@ html {
 }
 
 h1 {
-    width: 260px;
-    height: 55px;
+    width: 270px;
+    height: 60px;
     margin: 0 auto;
     margin-top: 14px;
     background-color: var(--red);
     border-radius: 7px;
+    border: solid 3px black;
 }
 
 h1 {
@@ -46,13 +48,14 @@ section {
     width: auto;
     height: auto;
     margin-top: 40px;
-    margin-left: 20px;
+    margin-inline: 20px;
 }
 
 h2 {
     font-size: 2.5rem;
     margin-bottom: 10px;
     font-weight: 500;
+    text-align: center;
 }
 
 .cards-container {
@@ -100,16 +103,39 @@ img {
 
 #id-information p {
     margin-block: 32px;
-    margin-block-end: 57px;
+    margin-block-end: 50px;
     font-size: 2rem;
     font-weight: 300;
+    text-align: justify;
+}
+
+a {
+    text-decoration: none;
+    color: var(--darkBlue);
 }
 
 .relationship-list, .relationship-list--title {
-    margin-block-end: 20px;
+    margin-block-end: 25px;
 }
 
 .relationship-container h3, .card-container h3 {
     margin-block-end: 8px;
     font-weight: 300;
+    text-align: center;
+}
+
+footer {
+    height: 100px;
+    margin-top: 50px;
+    background-color: var(--red);
+    text-align: center;
+    
+}
+
+footer span {
+    display: inline-block;
+    margin-block-start: 35px;
+    color: var(--white);
+    font-size: 2rem;
+    font-weight: 400;
 }
