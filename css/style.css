@@ -45,7 +45,7 @@ h1 {
 section {
     width: auto;
     height: auto;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: 20px;
 }
 
@@ -109,7 +109,7 @@ img {
     margin-block-end: 20px;
 }
 
-.relationship-container h3 {
+.relationship-container h3, .card-container h3 {
     margin-block-end: 8px;
     font-weight: 300;
 }
