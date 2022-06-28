@@ -5,6 +5,7 @@ const home = () => {
     getCharacteres();
     getComics();
     getEvents();
+    homeButton();
 }
 
 const idPage = () => {
@@ -18,9 +19,10 @@ const idPage = () => {
     const [,type] = url.split('#');
     console.log(type);
     getElementById(id, type);
+    homeButton();
 }
 
-const navigator = () => {
+const navigatorF = () => {
     if(location.hash) { /* si al menos tiene algo */
         console.log('tiene algo');
         idPage();
@@ -30,5 +32,5 @@ const navigator = () => {
     }
 }
 
-window.addEventListener('DOMContentLoaded', navigator);
-window.addEventListener('hashchange', navigator);
+window.addEventListener('DOMContentLoaded', navigatorF);
+window.addEventListener('hashchange', navigatorF);

@@ -34,6 +34,7 @@ h1 {
     color: var(--white);
     text-align: center;
     font-weight: bold;
+    cursor: pointer;
 }
 
 /* main {

@@ -9,6 +9,7 @@ const api = axios.create({
         'limit': '20'
     }
 });
+//funciones chidas
 /* h3 es la propiedad del objeto que tiene el nombre, en personajes en name y en comics y eventos es title*/
 const elementsForEach = (elements, container, h3, type) => { 
     elements.forEach(element => {
@@ -28,6 +29,14 @@ const elementsForEach = (elements, container, h3, type) => {
     });
 }
 
+const homeButton = () => {
+    const header = document.querySelector('header h1');
+    header.addEventListener('click', () => {
+        // location.hash = '';
+        location.href = '/home/alejandro/Documentos/marvel-page/index.html'; //para redirigir al usuario a otra parte
+    });
+}
+//llamadas a la api
 const getCharacteres = async () => {
     const {data} = await api('characters');
     const characters = data.data.results;
@@ -44,7 +53,7 @@ const getComics = async (id = undefined, type = undefined) => {
     } else {
         const {data} = await api(`${type}/${id}/comics`);
         console.log(data.data.results);
-        elementsForEach(data.data.results, related1, 'title', 'comics')
+        elementsForEach(data.data.results, related1, 'title', 'comics');
     }
 }
 
@@ -59,7 +68,7 @@ const getRelatedComics = async () => {
 
 }
 const getElementById = async (id, type) => {
-    const {data} = await api(`characters/${id}`);
+    const {data} = await api(`${type}/${id}`);
     const element = data.data.results[0];
     console.log(element);
 
@@ -68,10 +77,6 @@ const getElementById = async (id, type) => {
         moreDetails.textContent = element.name;
         relatedTitle1.textContent = 'Participación en Comics';
         relatedTitle2.textContent = 'Eventos Relacionados';
-
-        // elementsForEach(element.comics)
-        // console.log(element.comics.items);
-        // const 
         getComics(element.id, type);
     } else {
         headerSecundaryTitle.textContent = element.title;
