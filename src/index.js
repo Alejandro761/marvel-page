@@ -12,6 +12,7 @@ const api = axios.create({
 //funciones chidas
 /* h3 es la propiedad del objeto que tiene el nombre, en personajes en name y en comics y eventos es title*/
 const elementsForEach = (elements, container, h3, type) => { 
+    container.textContent = '';
     elements.forEach(element => {
         const image = document.createElement('img');
         image.src = `${element.thumbnail.path}.${element.thumbnail.extension}`;
@@ -36,16 +37,22 @@ const homeButton = () => {
         location.href = '/home/alejandro/Documentos/marvel-page/index.html'; //para redirigir al usuario a otra parte
     });
 }
-//llamadas a la api
-const getCharacteres = async () => {
-    const {data} = await api('characters');
-    const characters = data.data.results;
-    console.log(characters);
 
-    elementsForEach(characters, charactersCardsContainer, 'name', 'characters');
+//llamadas a la api
+const getCharacteres = async (id = undefined, type = undefined, related = undefined) => {
+    if ( id === undefined) {
+        const {data} = await api('characters');
+        const characters = data.data.results;
+        console.log(characters);
+        elementsForEach(characters, charactersCardsContainer, 'name', 'characters');
+    } else {
+        const {data} = await api(`${type}/${id}/characters`);
+        console.log(data.data.results);
+        elementsForEach(data.data.results, related, 'name', 'characters');
+    }
 }
 
-const getComics = async (id = undefined, type = undefined) => {
+const getComics = async (id = undefined, type = undefined, related = undefined) => {
     if ( id === undefined) {
         const {data} = await api('comics');
         console.log(data.data.results);
@@ -53,20 +60,22 @@ const getComics = async (id = undefined, type = undefined) => {
     } else {
         const {data} = await api(`${type}/${id}/comics`);
         console.log(data.data.results);
-        elementsForEach(data.data.results, related1, 'title', 'comics');
+        elementsForEach(data.data.results, related, 'title', 'comics');
     }
 }
 
-const getEvents = async () => {
-    const {data} = await api('events');
-    console.log(data.data.results);
-
-    elementsForEach(data.data.results, eventsCardsContainer, 'title', 'events');
+const getEvents = async (id = undefined, type = undefined, related = undefined) => {
+    if ( id === undefined) {
+        const {data} = await api('events');
+        console.log(data.data.results);
+        elementsForEach(data.data.results, eventsCardsContainer, 'title', 'events');
+    } else {
+        const {data} = await api(`${type}/${id}/events`);
+        console.log(data.data.results);
+        elementsForEach(data.data.results, related, 'title', 'events');
+    }
 }
 
-const getRelatedComics = async () => {
-
-}
 const getElementById = async (id, type) => {
     const {data} = await api(`${type}/${id}`);
     const element = data.data.results[0];
@@ -76,19 +85,38 @@ const getElementById = async (id, type) => {
         headerSecundaryTitle.textContent = element.name;
         moreDetails.textContent = element.name;
         relatedTitle1.textContent = 'Participación en Comics';
+        getComics(element.id, type, related1);
         relatedTitle2.textContent = 'Eventos Relacionados';
-        getComics(element.id, type);
+        getEvents(element.id, type, related2);
     } else {
         headerSecundaryTitle.textContent = element.title;
         moreDetails.textContent = element.title;
+        relatedTitle1.textContent = 'Personajes que participan';
+        getCharacteres(element.id, type, related1);
 
         if (type === 'comics') {
-            relatedTitle1.textContent = 'Personajes que participan';
             relatedTitle2.textContent = 'Eventos Relacionados';
+            getEvents(element.id, type, related2);
         } else {
-            relatedTitle1.textContent = 'Personajes que participan';
             relatedTitle2.textContent = 'Comics relacionados';
+            getComics(element.id, type, related2);
         }
+    }
+
+    if (type != 'characters' && element.characters.available === 0){
+        relatedTitle1.textContent = 'No hay personajes disponibles';
+    }
+    
+    if (type != 'comics' && element.comics.available === 0){
+        if (type === 'characters') {
+            relatedTitle1.textContent = 'No hay comics disponibles';
+        } else {
+            relatedTitle2.textContent = 'No hay comics relacionados';
+        }
+    }
+
+    if (type != 'events' && element.events.available === 0){
+        relatedTitle2.textContent = 'No hay eventos relacionados';
     }
 
     mainImage.src = `${element.thumbnail.path}.${element.thumbnail.extension}`;
@@ -96,8 +124,6 @@ const getElementById = async (id, type) => {
     const text = document.createTextNode(element.description);
     mainText.insertBefore(text, ref);
     moreDetails.href = element.urls[0].url;
-
-
 }
 
 const getCharacteresComics = async () => {
